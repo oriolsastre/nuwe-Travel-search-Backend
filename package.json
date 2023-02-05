@@ -1,0 +1,37 @@
+{
+  "name": "nuwe-travel-search-backend",
+  "version": "1.0.0",
+  "description": "Travel finder feature of land and air trips searching by city",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js",
+    "dev": "nodemon app/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oriolsastre/nuwe-Travel-search-Backend-.git"
+  },
+  "keywords": [
+    "nuwe",
+    "vueling",
+    "backend",
+    "travel",
+    "search"
+  ],
+  "author": "Oriol Sastre Rienitz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oriolsastre/nuwe-Travel-search-Backend-/issues"
+  },
+  "homepage": "https://github.com/oriolsastre/nuwe-Travel-search-Backend-#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.1.0",
+    "sequelize": "^6.28.0"
+  }
+}
