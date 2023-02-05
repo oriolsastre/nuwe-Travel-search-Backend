@@ -9,4 +9,6 @@ const sequelize = new Sequelize(mysqlConfig.name, mysqlConfig.user, mysqlConfig.
     sync: { force: false }
 })
 
+sequelize.sync({force:false})
+
 module.exports = { sequelize }

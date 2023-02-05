@@ -1,18 +1,25 @@
 const express = require('express');
 
-const {sequelize} = require('./database/connectDB')
 const {expressConfig} = require('./config/config')
 
 const {MWs} = require('./middlewares/middlewares')
 
-sequelize.sync().catch(err => console.log(err))
+//Connect and sicronize DB with Sequelize
+/* try{
+    const {sequelize} = require('./database/connectDB')
+    const {initModels} = require('./models/init-models')
+    initModels(sequelize)
+}catch(e){
+    console.log("Error connecting to Database");
+    console.log(e.message);
+} */
 
 const app = express();
 app.use(express.json())
 
 
 app.get('/', (req,res) => {res.json({page:"Entry point"})})
-app.get('/:city', MWs, require('./controllers/getCity'))
+app.get('/:city', MWs, require('./controllers/getTrips'))
 
 app.use((req, res) => {res.status(404).json({error: "Page not found"})})
 
