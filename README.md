@@ -75,7 +75,7 @@ Details vary depending if the trip is air or land type.
     {
         status: 200,
         error: null,
-        message: "Ok"
+        message: "Ok",
         data: [{
             name: "The Asian Magnolia",
             type: "air",
