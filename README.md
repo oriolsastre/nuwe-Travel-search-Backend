@@ -7,7 +7,7 @@ You will need to have installed on your local machine:
 * NodeJS (https://nodejs.org/ca/)
 * MySQL Server (https://www.mysql.com/)
 
-## Instalation
+## Installation
 ### Load the Database
 On `app->database->database.sql` you will find the database ready to be loaded on your MySQL server together with some example values.
 
@@ -41,13 +41,13 @@ This means, the input `'celona'` will search for trips that contain, for example
 
 The input should be at least 3 characters long.
 
-The input can ben on any language accepted by the system (check the table `language` on the database). This means, the capital of China, Beijing, can be found matching either: 'Pequín' (in Catalan), 'Pekín' (in Spanish), 'Beijing' (in English), '北京市' (in Chinese) or 'بكين' (in Arabic).
+The input can be on any language accepted by the system (check the table `language` on the database). This means, the capital of China, Beijing, can be found matching either: 'Pequín' (in Catalan), 'Pekín' (in Spanish), 'Beijing' (in English), '北京市' (in Chinese) or 'بكين' (in Arabic).
 
 The input is introduced as a parameter on `http://localhost:3000/[input]` on a GET method.
 
 ### Output
 
-The output is a json with, as data, an array of all the trips containing city matching the input, follwing the structure:
+The output is a json with, as data, an array of all the trips containing cities matching the input, following the structure:
 ```javascript
 {
     status: [Int, http status code],
@@ -76,7 +76,7 @@ Details vary depending if the trip is air or land type.
         status: 200,
         error: null,
         message: "Ok"
-        data:[{
+        data: [{
             name: "The Asian Magnolia",
             type: "air",
             days: 7,
@@ -91,7 +91,7 @@ Details vary depending if the trip is air or land type.
         },{
             name: "Eruopes core",
             type: "land",
-            days:4,
+            days: 4,
             cities: ["Barcelona","London","Berlin"],
             details: [{
                 hotel: "Hotel Mediterrània",
@@ -109,9 +109,9 @@ Matching 'Bar**celona**'.
 
 ## Some details
 
-Currently the cities are shown with a `common_name` which is the local name of the city if that language is in the database, otherwise english is chosen (for example Tokyo and Hanoi, since Japanese and Vietnamese are still not introduced in the system). In the example shown above, Barcelona is shown in Catalan while Beijing and Shanghai are shown in Chinese.
+Currently the cities are shown with a `common_name` which is the local name of the city if that language is in the database, otherwise English is chosen (for example Tokyo and Hanoi, since Japanese and Vietnamese are still not introduced in the system). In the example shown above, Barcelona is shown in Catalan while Beijing and Shanghai are shown in Chinese.
 
-## How to handle new features
+## How to handle new features (some examples)
 
 - New languages can easily be added to the database, and then the cities should be translated with the new language.
 
@@ -119,8 +119,8 @@ Currently the cities are shown with a `common_name` which is the local name of t
 
     <!-- This could be achieved adding a simple condition (`WHERE language='langi'`) to the query searching for matches on cities. -->
 
-- A similar parameter `lango` (language ouput) could be added to show in the results the name of the cities with the desired language. This would be useful in the example shown above, then the cities of the first trip would be: [Barcelona, Xanghai, Pequín].
+- A similar parameter `lango` (language output) could be added to show in the results the name of the cities with the desired language. This would be useful in the example shown above, then the cities of the first trip would be: [Barcelona, Xanghai, Pequín].
 
-    This can be achieved with the instance method in the City model `nameInLanguage(lang)`, which accepting the ISO 639-2/T language code as input, it returns asyncronously, if available, the name of the city in that language. If not translated, it returns the common name.
+    This can be achieved with the instance method in the City model `nameInLanguage(lang)`, which accepting the ISO 639-2/T language code as input, it returns asynchronously, if available, the name of the city in that language. If not translated, it returns the common name.
 
 - New types of travel different to air/land could be added by creating a new table on the database similar to `trip_land` or `trip_air` with the corresponding details of the new type of travel.
