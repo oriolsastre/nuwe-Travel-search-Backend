@@ -13,7 +13,7 @@ On `app->database->database.sql` you will find the database ready to be loaded o
 
 Just copy and paste the code on a program such as "MySQL Workbench" or your "phpMyAdmin" or similar.
 
-Or from a terminal, if you have it configured, run the command `mysql -u [user] -p < [path to database.sql]` (you might have to run the command from a directory similar to: `C:\Program Files\MySQL\MySQL Server 8.0\bin`). 
+Or from a terminal, if you have it configured, run the command `mysql -u [user] -p < [path to database.sql] --default-character-set=utf8`. Mind the character-set to properly introduce the names in Chinese and Arabic alphabets (you might have to run the command from a directory similar to: `C:\Program Files\MySQL\MySQL Server 8.0\bin`). 
 
 ### Define environment variables
 On the root directory of this repository you will find a `.env-template` file. Make a copy of it and name it `.env`. Then fill the parameters inside with the configuration of your MySQL server (host, port, username and password). Password can be left blank if there is no password.

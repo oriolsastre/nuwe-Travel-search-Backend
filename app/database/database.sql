@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS `vueling-nuwe-osr`;
-CREATE DATABASE `vueling-nuwe-osr` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE `vueling-nuwe-osr` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`;
 USE `vueling-nuwe-osr`;
 
 CREATE TABLE `language` (
