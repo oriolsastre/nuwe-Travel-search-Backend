@@ -18,7 +18,9 @@ Or from a terminal, if you have it configured, run the command `mysql -u [user] 
 ### Define environment variables
 On the root directory of this repository you will find a `.env-template` file. Make a copy of it and name it `.env`. Then fill the parameters inside with the configuration of your MySQL server (host, port, username and password). Password can be left blank if there is no password.
 
-The `EXPRESS_HOST` and `EXPRESS_PORT` should not be changed if there is no particular reason for it.
+The database name `vueling-nuwe-osr` should NOT be changed. In the case it were necessary to do so, the `database.sql` file should be updated accordingly.
+
+The `EXPRESS_HOST` and `EXPRESS_PORT` variables should also not be changed if there is no particular reason for it.
 
 ### Install dependencies
 Open a terminal on the root directory of this repository and run the command:
