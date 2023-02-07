@@ -1,6 +1,6 @@
-const { Op, Model } = require("sequelize");
+const { Op } = require("sequelize");
 const { sequelize } = require('../database/connectDB')
-const { initModels } = require('../models/init-models')
+const { initModels } = require('../database/init-models')
 const Models = initModels(sequelize)
 
 /**
@@ -74,6 +74,7 @@ const getHotelsfromTrip = async (tripID) => {
         }],
         where: {trip: tripID}
     })
+    if(hotels===null) return [];
     return [
         {hotel: hotels.hotel1_hotel.name, stars:hotels.hotel1_hotel.stars, city: hotels.hotel1_hotel.city_city.common_name},
         {hotel: hotels.hotel2_hotel.name, stars:hotels.hotel2_hotel.stars, city: hotels.hotel2_hotel.city_city.common_name}
@@ -96,6 +97,7 @@ const getFlightsFromTrip = async (tripID) => {
         }],
         where: {trip: tripID}
     })
+    if(flights===null) return []
     return [
         {departure_city: flights.city1_city.common_name, departure_time: flights.departure1},
         {departure_city: flights.city2_city.common_name, departure_time: flights.departure2}

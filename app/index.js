@@ -1,27 +1,17 @@
 const express = require('express');
-
+const cors = require('cors')
 const {expressConfig} = require('./config/config')
-
 const {MWs} = require('./middlewares/middlewares')
-
-//Connect and sicronize DB with Sequelize
-/* try{
-    const {sequelize} = require('./database/connectDB')
-    const {initModels} = require('./models/init-models')
-    initModels(sequelize)
-}catch(e){
-    console.log("Error connecting to Database");
-    console.log(e.message);
-} */
+const Response = require('./models/Response')
 
 const app = express();
+app.use(cors())
 app.use(express.json())
 
-
-app.get('/', (req,res) => {res.json({page:"Entry point"})})
+app.get('/', (req,res) => {res.json(new Response(200, null, "Entry point", null))})
 app.get('/:city', MWs, require('./controllers/getTrips'))
 
-app.use((req, res) => {res.status(404).json({error: "Page not found"})})
+app.use((req, res) => {res.status(404).json(new Response(404, {message: "Page not found"}, "There was an error", null))})
 
 app.listen(expressConfig, ()=>{
     console.log(`Listening at: http://${expressConfig.host}:${expressConfig.port}`);

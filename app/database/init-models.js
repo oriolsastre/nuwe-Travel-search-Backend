@@ -1,22 +1,22 @@
-var DataTypes = require("sequelize").DataTypes;
-var _city = require("./city");
-var _city_language = require("./city_language");
-var _hotel = require("./hotel");
-var _language = require("./language");
-var _trip = require("./trip");
-var _trip_air = require("./trip_air");
-var _trip_cities = require("./trip_cities");
-var _trip_land = require("./trip_land");
+let DataTypes = require("sequelize").DataTypes;
+let _city = require("../models/City");
+let _city_language = require("../models/City_Language");
+let _hotel = require("../models/Hotel");
+let _language = require("../models/Language");
+let _trip = require("../models/Trip");
+let _trip_air = require("../models/Trip_Air");
+let _trip_cities = require("../models/Trip_Cities");
+let _trip_land = require("../models/Trip_Land");
 
 function initModels(sequelize) {
-  var city = _city(sequelize, DataTypes);
-  var city_language = _city_language(sequelize, DataTypes);
-  var hotel = _hotel(sequelize, DataTypes);
-  var language = _language(sequelize, DataTypes);
-  var trip = _trip(sequelize, DataTypes);
-  var trip_air = _trip_air(sequelize, DataTypes);
-  var trip_cities = _trip_cities(sequelize, DataTypes);
-  var trip_land = _trip_land(sequelize, DataTypes);
+  let city = _city(sequelize, DataTypes);
+  let city_language = _city_language(sequelize, DataTypes);
+  let hotel = _hotel(sequelize, DataTypes);
+  let language = _language(sequelize, DataTypes);
+  let trip = _trip(sequelize, DataTypes);
+  let trip_air = _trip_air(sequelize, DataTypes);
+  let trip_cities = _trip_cities(sequelize, DataTypes);
+  let trip_land = _trip_land(sequelize, DataTypes);
 
   city.belongsToMany(language, { as: 'language_languages', through: city_language, foreignKey: "city", otherKey: "language" });
   city.belongsToMany(trip, { as: 'trip_trips', through: trip_cities, foreignKey: "city", otherKey: "trip" });
@@ -44,6 +44,27 @@ function initModels(sequelize) {
   trip.hasMany(trip_cities, { as: "trip_cities", foreignKey: "trip"});
   trip_land.belongsTo(trip, { as: "trip_trip", foreignKey: "trip"});
   trip.hasOne(trip_land, { as: "trip_land", foreignKey: "trip"});
+
+  /**
+   * Returns the city name in the desired language specified by it's iso code as argument. If name in that language is not available, it returns its common name.
+   * @param {*} iso-code of lang 
+   * @returns 
+   */
+  city.prototype.nameInLanguage = async function(lang=null){
+    if(lang === null) return this.common_name;
+    const cityLanguage = await city_language.findOne({
+      where: {'city': this.id},
+      include: [{
+        model: language,
+        as: 'language_language',
+        where: {iso: lang}
+      }],
+      attributes: ['name'],
+      raw: true
+    });
+    if(cityLanguage === null) return this.common_name
+    return cityLanguage.name;
+  }
 
   return {
     city,
