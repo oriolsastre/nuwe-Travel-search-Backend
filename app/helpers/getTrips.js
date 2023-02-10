@@ -5,25 +5,26 @@ const Models = initModels(sequelize)
 
 /**
  * Search cities that match the given partial name.
- * @param {*} partial_name 
- * @returns Array with the city ids matching the given partial name.
+ * @param {String} partial_name - Partial city name to be searched 
+ * @returns {Promise<{name: String, id: Number}>} [{name, id}] - Array with objects containing city name and id matching the given partial name.
  */
-const searchCitiesID = async (partial_name) =>  {
-    const cities = await Models.city_language.findAll({where: {name: {[Op.substring]: `${partial_name}`}}, group: 'city', attributes: ['city']});
-    let citiesID = []
-    cities.forEach(element => {citiesID.push(element.city)});
-    return citiesID
+const searchCities = async (partial_name) =>  {
+    return await Models.city_language.findAll({
+        where: {name: {[Op.substring]: `${partial_name}`}},
+        group: 'city',
+        attributes: [['city','id'], 'name'],
+        raw:true
+    });
 }
 
 /**
  * Given an array of city ids, find those trips which include those cities
- * @param {*} Array of city ids
- * @returns Array of trips matching conditions.
+ * @param {Array<Number>} cities - Array of city ids
+ * @returns {Promise<Array>} Array of trips matching conditions.
  */
 const searchTrips = async (cities) => {
     const validTripID = await Models.trip_cities.findAll({where: {city: {[Op.in]: cities}}, attributes: ['trip'], group: 'trip', raw: true})
     const arrayTripID = validTripID.map(({trip}) => trip)
-
     const trips = await Models.trip.findAll({
         include: [{
             model: Models.city,
@@ -37,7 +38,7 @@ const searchTrips = async (cities) => {
 
 /**
  * Given a trip, get the data required: name; [air/land]; days; cities; [hotels/departures] 
- * @param {*} trip 
+ * @param {Trip} trip - Trip object.
  * @returns Data of the trip
  */
 const getTripData = async (trip) => {
@@ -52,7 +53,7 @@ const getTripData = async (trip) => {
 }
 /**
  * Given a land_trip id, get the hotels included on that trip.
- * @param {} tripID
+ * @param {Number} tripID
  * @returns Array of hotels
  */
 const getHotelsfromTrip = async (tripID) => {
@@ -83,7 +84,7 @@ const getHotelsfromTrip = async (tripID) => {
 
 /**
  * Given an air_trip id, get the flights included on that trip.
- * @param {} tripID
+ * @param {Number} tripID
  * @returns Array of flights
  */
 const getFlightsFromTrip = async (tripID) => {
@@ -104,4 +105,4 @@ const getFlightsFromTrip = async (tripID) => {
     ]
 }
 
-module.exports = { searchCitiesID, searchTrips, getTripData }
+module.exports = { searchCities, searchTrips, getTripData }

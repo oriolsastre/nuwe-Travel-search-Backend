@@ -1,11 +1,12 @@
 const express = require('express');
-const cors = require('cors')
+//const cors = require('cors') //if necessary CORS could be enabled.
 const {expressConfig} = require('./config/config')
 const {MWs} = require('./middlewares/middlewares')
 const Response = require('./models/Response')
 
 const app = express();
-app.use(cors())
+app.disable("x-powered-by");
+//app.use(cors()) //if necessary CORS could be enabled.
 app.use(express.json())
 
 app.get('/', (req,res) => {res.json(new Response(200, null, "Entry point", null))})
